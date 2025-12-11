@@ -1,0 +1,11 @@
+emp_id,name,department,salary,years_exp,performance_score
+E101,Ramesh,Sales,45000,3,78
+E102,Sneha,HR,52000,5,85
+E103,Amit,IT,62000,7,92
+E104,Leela,Sales,39000,2,70
+E105,Karan,IT,58000,4,81
+E106,Priya,Finance,48000,3,88
+E107,David,Marketing,42000,2,75
+E108,Sunita,IT,65000,6,95
+E109,Vikram,Operations,50000,4,82
+E110,Anita,HR,55000,5,89

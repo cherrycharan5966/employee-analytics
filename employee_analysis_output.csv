@@ -1,0 +1,6 @@
+emp_id,name,department,salary,years_exp,performance_score,performance_level,promotion_eligible
+E101,Ramesh,Sales,45000,3,78,MEDIUM,NO
+E102,Sneha,HR,52000,5,85,HIGH,YES
+E103,Amit,IT,62000,7,92,HIGH,YES
+E104,Leela,Sales,39000,2,70,MEDIUM,NO
+E105,Karan,IT,58000,4,81,MEDIUM,YES

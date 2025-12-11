@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Salary & Performance Analytics Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>Employee Salary & Performance Analytics</h1>
+                    <p class="lead">Comprehensive insights into employee performance and compensation</p>
+                    <a href="/upload" class="btn btn-light">Upload New Data</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Summary Metrics -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card metric-card">
+                    <h5>Total Employees</h5>
+                    <div id="totalEmployees" class="metric-value">0</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card">
+                    <h5>Avg. Salary</h5>
+                    <div id="avgSalary" class="metric-value">₹0</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card">
+                    <h5>Promotion Eligible</h5>
+                    <div id="promoEligible" class="metric-value">0</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card">
+                    <h5>Correlation</h5>
+                    <div id="correlation" class="metric-value">0.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-tabs mb-4" id="analyticsTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">Overview</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="salary-tab" data-bs-toggle="tab" data-bs-target="#salary" type="button" role="tab">Salary Analytics</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="performance-tab" data-bs-toggle="tab" data-bs-target="#performance" type="button" role="tab">Performance</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="promotion-tab" data-bs-toggle="tab" data-bs-target="#promotion" type="button" role="tab">Promotion</button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="analyticsTabContent">
+            <!-- Overview Tab -->
+            <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                <h3 class="section-title">Employee Overview</h3>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Employee Distribution by Department</h5>
+                                <div class="chart-container">
+                                    <canvas id="deptChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Performance Level Distribution</h5>
+                                <div class="chart-container">
+                                    <canvas id="perfLevelChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">All Employees</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="employeesTable">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Department</th>
+                                                <th>Salary</th>
+                                                <th>Years Exp</th>
+                                                <th>Performance Score</th>
+                                                <th>Performance Level</th>
+                                                <th>Promotion Eligible</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Salary Analytics Tab -->
+            <div class="tab-pane fade" id="salary" role="tabpanel">
+                <h3 class="section-title">Salary Analytics</h3>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Average Salary by Department</h5>
+                                <div class="chart-container">
+                                    <canvas id="avgSalaryChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Salary Range by Department</h5>
+                                <div class="chart-container">
+                                    <canvas id="salaryRangeChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Salary Expense by Department</h5>
+                                <div class="chart-container">
+                                    <canvas id="totalSalaryChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Analytics Tab -->
+            <div class="tab-pane fade" id="performance" role="tabpanel">
+                <h3 class="section-title">Performance Analytics</h3>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Average Performance Score by Department</h5>
+                                <div class="chart-container">
+                                    <canvas id="avgPerfChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Top Performers</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="topPerformersTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Department</th>
+                                                <th>Performance Score</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Promotion Analytics Tab -->
+            <div class="tab-pane fade" id="promotion" role="tabpanel">
+                <h3 class="section-title">Promotion Analytics</h3>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Promotion Eligibility</h5>
+                                <div class="chart-container">
+                                    <canvas id="promoChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Eligible Employees</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="eligibleEmployeesTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Department</th>
+                                                <th>Years Experience</th>
+                                                <th>Performance Score</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">All Employees with Promotion Status</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="allEmployeesPromotionTable">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Department</th>
+                                                <th>Years Exp</th>
+                                                <th>Performance Score</th>
+                                                <th>Promotion Eligible</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2025 Employee Analytics Dashboard | Built with Flask & Chart.js</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables for charts
+        let deptChart, perfLevelChart, avgSalaryChart, salaryRangeChart, totalSalaryChart;
+        let avgPerfChart, promoChart;
+
+        // Fetch and display data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load all data
+            loadSummaryData();
+            loadEmployeesData();
+            loadSalaryAnalytics();
+            loadPerformanceAnalytics();
+            loadPromotionAnalytics();
+        });
+
+        // Load summary data
+        function loadSummaryData() {
+            fetch('/api/summary')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Summary data:', data);
+                    if (Object.keys(data).length === 0) {
+                        console.log('No summary data available');
+                        return;
+                    }
+                    
+                    // Update summary metrics
+                    const totalEmployees = Object.values(data.employee_count_by_dept || {}).reduce((a, b) => a + b, 0);
+                    document.getElementById('totalEmployees').textContent = totalEmployees || 0;
+                    
+                    if (data.total_salary_by_dept && Object.keys(data.total_salary_by_dept).length > 0) {
+                        const totalSalary = Object.values(data.total_salary_by_dept).reduce((a, b) => a + b, 0);
+                        document.getElementById('avgSalary').textContent = totalEmployees > 0 ? '₹' + Math.round(totalSalary / totalEmployees).toLocaleString() : '₹0';
+                    } else {
+                        document.getElementById('avgSalary').textContent = '₹0';
+                    }
+                    
+                    const promoEligible = data.promotion_counts ? (data.promotion_counts.YES || 0) : 0;
+                    document.getElementById('promoEligible').textContent = promoEligible;
+                    
+                    document.getElementById('correlation').textContent = data.salary_performance_correlation || '0.00';
+                    
+                    // Create charts only if data exists
+                    if (data.employee_count_by_dept && Object.keys(data.employee_count_by_dept).length > 0) {
+                        createDeptChart(data.employee_count_by_dept);
+                    }
+                    if (data.performance_level_counts && Object.keys(data.performance_level_counts).length > 0) {
+                        createPerfLevelChart(data.performance_level_counts);
+                    }
+                    if (data.total_salary_by_dept && Object.keys(data.total_salary_by_dept).length > 0) {
+                        createTotalSalaryChart(data.total_salary_by_dept);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading summary data:', error);
+                });
+        }
+
+        // Load employees data
+        function loadEmployeesData() {
+            fetch('/api/employees')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Employees data:', data);
+                    const tbody = document.querySelector('#employeesTable tbody');
+                    tbody.innerHTML = '';
+                    
+                    if (!data || data.length === 0) {
+                        const row = document.createElement('tr');
+                        row.innerHTML = '<td colspan="8" class="text-center">No employee data available</td>';
+                        tbody.appendChild(row);
+                        return;
+                    }
+                    
+                    data.forEach(employee => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${employee.emp_id || ''}</td>
+                            <td>${employee.name || ''}</td>
+                            <td>${employee.department || ''}</td>
+                            <td>₹${employee.salary ? employee.salary.toLocaleString() : '0'}</td>
+                            <td>${employee.years_exp || '0'}</td>
+                            <td>${employee.performance_score || '0'}</td>
+                            <td>${employee.performance_level || 'N/A'}</td>
+                            <td>${employee.promotion_eligible || 'N/A'}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading employees data:', error);
+                    const tbody = document.querySelector('#employeesTable tbody');
+                    tbody.innerHTML = '<tr><td colspan="8" class="text-center">Error loading data</td></tr>';
+                });
+        }
+
+        // Load salary analytics
+        function loadSalaryAnalytics() {
+            fetch('/api/salary-analytics')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Salary analytics data:', data);
+                    if (Object.keys(data).length === 0) {
+                        console.log('No salary analytics data available');
+                        return;
+                    }
+                    
+                    if (data.avg_salary) {
+                        createAvgSalaryChart(data.avg_salary);
+                    }
+                    if (data.salary_ranges) {
+                        createSalaryRangeChart(data.salary_ranges);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading salary analytics:', error);
+                });
+        }
+
+        // Load performance analytics
+        function loadPerformanceAnalytics() {
+            fetch('/api/performance-analytics')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Performance analytics data:', data);
+                    if (Object.keys(data).length === 0) {
+                        console.log('No performance analytics data available');
+                        return;
+                    }
+                    
+                    if (data.avg_performance_by_dept) {
+                        createAvgPerfChart(data.avg_performance_by_dept);
+                    }
+                    
+                    // Populate top performers table
+                    const tbody = document.querySelector('#topPerformersTable tbody');
+                    tbody.innerHTML = '';
+                    
+                    if (data.top_performers && data.top_performers.length > 0) {
+                        data.top_performers.forEach(employee => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${employee.name || ''}</td>
+                                <td>${employee.department || ''}</td>
+                                <td>${employee.performance_score || '0'}</td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    } else {
+                        const row = document.createElement('tr');
+                        row.innerHTML = '<td colspan="3" class="text-center">No data available</td>';
+                        tbody.appendChild(row);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading performance analytics:', error);
+                });
+        }
+
+        // Load promotion analytics
+        function loadPromotionAnalytics() {
+            fetch('/api/promotion-analytics')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Promotion analytics data:', data);
+                    if (Object.keys(data).length === 0) {
+                        console.log('No promotion analytics data available');
+                        return;
+                    }
+                    
+                    if (data.promotion_counts) {
+                        createPromoChart(data.promotion_counts);
+                    }
+                    
+                    // Populate eligible employees table
+                    const tbody = document.querySelector('#eligibleEmployeesTable tbody');
+                    tbody.innerHTML = '';
+                    
+                    if (data.eligible_employees && data.eligible_employees.length > 0) {
+                        data.eligible_employees.forEach(employee => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${employee.name || ''}</td>
+                                <td>${employee.department || ''}</td>
+                                <td>${employee.years_exp || '0'}</td>
+                                <td>${employee.performance_score || '0'}</td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    } else {
+                        const row = document.createElement('tr');
+                        row.innerHTML = '<td colspan="4" class="text-center">No eligible employees</td>';
+                        tbody.appendChild(row);
+                    }
+                    
+                    // Populate all employees promotion status table
+                    loadAllEmployeesPromotionStatus();
+                })
+                .catch(error => {
+                    console.error('Error loading promotion analytics:', error);
+                });
+        }
+        
+        // Load all employees with promotion status
+        function loadAllEmployeesPromotionStatus() {
+            fetch('/api/employees')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.querySelector('#allEmployeesPromotionTable tbody');
+                    tbody.innerHTML = '';
+                    
+                    if (!data || data.length === 0) {
+                        const row = document.createElement('tr');
+                        row.innerHTML = '<td colspan="6" class="text-center">No employee data available</td>';
+                        tbody.appendChild(row);
+                        return;
+                    }
+                    
+                    data.forEach(employee => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${employee.emp_id || ''}</td>
+                            <td>${employee.name || ''}</td>
+                            <td>${employee.department || ''}</td>
+                            <td>${employee.years_exp || '0'}</td>
+                            <td>${employee.performance_score || '0'}</td>
+                            <td><span class="badge ${employee.promotion_eligible === 'YES' ? 'bg-success' : 'bg-danger'}">${employee.promotion_eligible || 'N/A'}</span></td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading all employees promotion status:', error);
+                    const tbody = document.querySelector('#allEmployeesPromotionTable tbody');
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center">Error loading data</td></tr>';
+                });
+        }
+
+        // Chart creation functions
+        function createDeptChart(data) {
+            const ctx = document.getElementById('deptChart').getContext('2d');
+            if (deptChart) deptChart.destroy();
+            deptChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        label: 'Number of Employees',
+                        data: Object.values(data),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createPerfLevelChart(data) {
+            const ctx = document.getElementById('perfLevelChart').getContext('2d');
+            if (perfLevelChart) perfLevelChart.destroy();
+            perfLevelChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        data: Object.values(data),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function createAvgSalaryChart(data) {
+            const ctx = document.getElementById('avgSalaryChart').getContext('2d');
+            if (avgSalaryChart) avgSalaryChart.destroy();
+            avgSalaryChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        label: 'Average Salary (₹)',
+                        data: Object.values(data),
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createSalaryRangeChart(data) {
+            const ctx = document.getElementById('salaryRangeChart').getContext('2d');
+            if (salaryRangeChart) salaryRangeChart.destroy();
+            salaryRangeChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data.min),
+                    datasets: [
+                        {
+                            label: 'Minimum Salary',
+                            data: Object.values(data.min),
+                            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Maximum Salary',
+                            data: Object.values(data.max),
+                            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createTotalSalaryChart(data) {
+            const ctx = document.getElementById('totalSalaryChart').getContext('2d');
+            if (totalSalaryChart) totalSalaryChart.destroy();
+            totalSalaryChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        label: 'Total Salary Expense (₹)',
+                        data: Object.values(data),
+                        backgroundColor: 'rgba(153, 102, 255, 0.7)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createAvgPerfChart(data) {
+            const ctx = document.getElementById('avgPerfChart').getContext('2d');
+            if (avgPerfChart) avgPerfChart.destroy();
+            avgPerfChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        label: 'Average Performance Score',
+                        data: Object.values(data),
+                        backgroundColor: 'rgba(255, 159, 64, 0.7)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function createPromoChart(data) {
+            const ctx = document.getElementById('promoChart').getContext('2d');
+            if (promoChart) promoChart.destroy();
+            promoChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        data: Object.values(data),
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+    </script>
+</body>
+</html>

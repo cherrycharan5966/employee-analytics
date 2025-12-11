@@ -1,0 +1,193 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>Employee Salary & Performance Analytics Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            h1, h2, h3 {
+                color: #2c3e50;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                margin: 20px 0;
+            }
+            table, th, td {
+                border: 1px solid #ddd;
+            }
+            th, td {
+                padding: 12px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            .executive-summary {
+                background-color: #e8f4f8;
+                padding: 15px;
+                border-left: 4px solid #3498db;
+                margin: 20px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Employee Salary &amp; Performance Analytics Report</h1>
+<h2>Executive Summary</h2>
+<p>This report presents the findings from our Employee Salary &amp; Performance Analytics project, which analyzes employee data to derive insights about salaries, performance, and promotion eligibility. The analysis was conducted using both PySpark for big data processing and a Flask web application for interactive visualization.</p>
+<h2>Project Overview</h2>
+<p>The Employee Salary &amp; Performance Analytics project provides comprehensive insights into employee performance and compensation through:</p>
+<ol>
+<li><strong>Data Processing</strong>: Using PySpark for scalable data processing</li>
+<li><strong>Web Dashboard</strong>: Interactive Flask application with real-time visualizations</li>
+<li><strong>Analytics Engine</strong>: Advanced calculations for performance metrics and business insights</li>
+</ol>
+<h2>Key Features</h2>
+<h3>Data Analytics Capabilities</h3>
+<ul>
+<li><strong>Data Loading</strong>: Reads employee data from CSV files</li>
+<li><strong>Data Cleaning</strong>: Converts data types and handles missing values</li>
+<li><strong>Salary Analytics</strong>: Calculates average, highest, and lowest salaries by department</li>
+<li><strong>Performance Analytics</strong>: Categorizes employees by performance level and identifies top performers</li>
+<li><strong>Promotion Eligibility</strong>: Identifies employees eligible for promotion based on experience and performance</li>
+<li><strong>Correlation Analysis</strong>: Analyzes relationships between salary and performance</li>
+<li><strong>Summary Reports</strong>: Generates counts and expenses by department and performance level</li>
+</ul>
+<h3>Web Dashboard Features</h3>
+<ul>
+<li><strong>Interactive Charts</strong>: Visualize data with Chart.js</li>
+<li><strong>Tabbed Interface</strong>: Organize analytics into logical sections</li>
+<li><strong>Responsive Design</strong>: Works on desktop and mobile devices</li>
+<li><strong>Real-time Data</strong>: Fetches data through RESTful API endpoints</li>
+<li><strong>User Data Upload</strong>: Allows users to upload their own employee data</li>
+</ul>
+<h2>Technical Implementation</h2>
+<h3>Backend Architecture</h3>
+<ul>
+<li><strong>Flask Framework</strong>: Python-based web framework for API and routing</li>
+<li><strong>Pandas</strong>: Data manipulation and analysis library</li>
+<li><strong>PySpark</strong>: Distributed computing framework for big data processing</li>
+<li><strong>RESTful API</strong>: JSON-based endpoints for frontend communication</li>
+</ul>
+<h3>Frontend Components</h3>
+<ul>
+<li><strong>Bootstrap 5</strong>: Responsive CSS framework</li>
+<li><strong>Chart.js</strong>: Interactive data visualization library</li>
+<li><strong>HTML5/CSS3</strong>: Modern web standards</li>
+<li><strong>JavaScript</strong>: Dynamic client-side functionality</li>
+</ul>
+<h2>Analytics Methodology</h2>
+<h3>Performance Categorization</h3>
+<ul>
+<li><strong>HIGH</strong>: Performance score ≥ 85</li>
+<li><strong>MEDIUM</strong>: Performance score between 70 and 84</li>
+<li><strong>LOW</strong>: Performance score &lt; 70</li>
+</ul>
+<h3>Promotion Eligibility Criteria</h3>
+<ul>
+<li>Years of experience ≥ 4 AND</li>
+<li>Performance score ≥ 80</li>
+</ul>
+<h3>Key Metrics Calculated</h3>
+<ol>
+<li>Average salary by department</li>
+<li>Salary ranges (minimum and maximum) by department</li>
+<li>Total salary expense by department</li>
+<li>Performance level distribution</li>
+<li>Top performers identification</li>
+<li>Promotion eligible employees</li>
+<li>Correlation between salary and performance</li>
+</ol>
+<h2>Sample Dataset Analysis</h2>
+<p>Using the provided sample dataset of 5 employees:</p>
+<p>| Employee ID | Name   | Department | Salary | Years Exp | Performance Score | Performance Level | Promotion Eligible |
+|-------------|--------|------------|--------|-----------|-------------------|-------------------|---------------------|
+| E101        | Ramesh | Sales      | 45000  | 3         | 78                | MEDIUM            | NO                  |
+| E102        | Sneha  | HR         | 52000  | 5         | 85                | HIGH              | YES                 |
+| E103        | Amit   | IT         | 62000  | 7         | 92                | HIGH              | YES                 |
+| E104        | Leela  | Sales      | 39000  | 2         | 70                | MEDIUM            | NO                  |
+| E105        | Karan  | IT         | 58000  | 4         | 81                | MEDIUM            | YES                 |</p>
+<h3>Key Findings</h3>
+<ul>
+<li><strong>Strong Positive Correlation</strong>: 0.90 correlation between salary and performance score</li>
+<li><strong>Department Analysis</strong>:</li>
+<li>IT department shows highest salaries and performance scores</li>
+<li>HR department has balanced compensation and performance</li>
+<li>Sales department has lower compensation and performance metrics</li>
+<li><strong>Promotion Eligibility</strong>: 3 out of 5 employees are eligible for promotion</li>
+<li><strong>Performance Distribution</strong>: 2 HIGH, 3 MEDIUM, 0 LOW performers</li>
+</ul>
+<h2>Department-wise Analytics</h2>
+<h3>Salary Statistics</h3>
+<ul>
+<li><strong>IT Department</strong>: ₹60,000 average salary, ₹62,000 max, ₹58,000 min</li>
+<li><strong>HR Department</strong>: ₹52,000 average salary, ₹52,000 max/min</li>
+<li><strong>Sales Department</strong>: ₹42,000 average salary, ₹45,000 max, ₹39,000 min</li>
+</ul>
+<h3>Performance Statistics</h3>
+<ul>
+<li><strong>IT Department</strong>: 86.5 average performance score</li>
+<li><strong>HR Department</strong>: 85.0 average performance score</li>
+<li><strong>Sales Department</strong>: 74.0 average performance score</li>
+</ul>
+<h3>Employee Distribution</h3>
+<ul>
+<li>IT: 2 employees</li>
+<li>Sales: 2 employees</li>
+<li>HR: 1 employee</li>
+</ul>
+<h2>Business Insights</h2>
+<ol>
+<li><strong>Compensation-Performance Alignment</strong>: The strong correlation (0.90) suggests effective alignment between compensation and performance</li>
+<li><strong>High-Performing Departments</strong>: IT department demonstrates both high performance and high compensation</li>
+<li><strong>Promotion Pipeline</strong>: Identified 3 employees ready for advancement opportunities</li>
+<li><strong>Department Balance</strong>: HR department maintains consistent performance and compensation</li>
+<li><strong>Development Opportunities</strong>: Sales department shows potential for improvement</li>
+</ol>
+<h2>Recommendations</h2>
+<ol>
+<li><strong>Recognition Programs</strong>: Implement recognition programs for high-performing employees (Sneha, Amit)</li>
+<li><strong>Career Development</strong>: Create advancement pathways for promotion-eligible employees</li>
+<li><strong>Performance Improvement</strong>: Develop targeted training for Sales department to improve performance metrics</li>
+<li><strong>Compensation Review</strong>: Regular review of compensation structures to maintain performance alignment</li>
+<li><strong>Succession Planning</strong>: Utilize identified eligible employees for leadership development programs</li>
+</ol>
+<h2>System Requirements</h2>
+<h3>Minimum Requirements</h3>
+<ul>
+<li>Java 8 or higher (for PySpark)</li>
+<li>Python 3.6 or higher</li>
+<li>4GB RAM</li>
+<li>100MB free disk space</li>
+</ul>
+<h3>Recommended Specifications</h3>
+<ul>
+<li>Java 11 or higher</li>
+<li>Python 3.8 or higher</li>
+<li>8GB RAM</li>
+<li>500MB free disk space</li>
+</ul>
+<h2>Installation and Setup</h2>
+<ol>
+<li>Install Java JDK and set JAVA_HOME environment variable</li>
+<li>Install Python dependencies: <code>pip install -r requirements.txt</code></li>
+<li>Run the application: <code>python app.py</code></li>
+<li>Access dashboard at http://localhost:5000</li>
+</ol>
+<h2>Conclusion</h2>
+<p>The Employee Salary &amp; Performance Analytics project successfully demonstrates advanced employee data analysis capabilities through both batch processing (PySpark) and interactive visualization (Flask dashboard). The strong correlation between salary and performance validates the organization's compensation strategy, while the identification of promotion-eligible employees provides valuable succession planning insights.</p>
+<p>The web-based dashboard offers an intuitive interface for exploring employee analytics, making complex data accessible to stakeholders across the organization. The modular architecture allows for easy extension and customization to meet evolving business needs.</p>
+<p>This project serves as a foundation for data-driven HR decision-making and can be scaled to accommodate larger datasets and more sophisticated analytics requirements.</p>
+    </body>
+    </html>
+    

@@ -1,0 +1,145 @@
+Expected PySpark Output
+=======================
+
+When you run the employee_analytics.py script with proper Java and PySpark installation, you would see output similar to:
+
+SparkSession created successfully!
+
+=== Original DataFrame ===
++------+-------+----------+------+---------+-----------------+
+|emp_id|   name|department|salary|years_exp|performance_score|
++------+-------+----------+------+---------+-----------------+
+|  E101| Ramesh|     Sales| 45000|        3|               78|
+|  E102| Sneha|        HR| 52000|        5|               85|
+|  E103|  Amit|        IT| 62000|        7|               92|
+|  E104| Leela|     Sales| 39000|        2|               70|
+|  E105| Karan|        IT| 58000|        4|               81|
++------+-------+----------+------+---------+-----------------+
+
+=== Cleaned DataFrame ===
++------+-------+----------+------+---------+-----------------+
+|emp_id|   name|department|salary|years_exp|performance_score|
++------+-------+----------+------+---------+-----------------+
+|  E101| Ramesh|     Sales| 45000|        3|               78|
+|  E102| Sneha|        HR| 52000|        5|               85|
+|  E103|  Amit|        IT| 62000|        7|               92|
+|  E104| Leela|     Sales| 39000|        2|               70|
+|  E105| Karan|        IT| 58000|        4|               81|
++------+-------+----------+------+---------+-----------------+
+
+=== Salary Analytics ===
+Average salary per department:
++----------+------------------+
+|department|         avg_salary|
++----------+------------------+
+|        HR|           52000.0|
+|        IT|           60000.0|
+|     Sales|           42000.0|
++----------+------------------+
+
+Highest and lowest salary in each department:
++----------+--------------+-------------+
+|department|highest_salary|lowest_salary|
++----------+--------------+-------------+
+|        HR|         52000|        52000|
+|        IT|         62000|        58000|
+|     Sales|         45000|        39000|
++----------+--------------+-------------+
+
+=== Performance Analytics ===
+DataFrame with performance level:
++------+-------+----------+------+---------+-----------------+-----------------+
+|emp_id|   name|department|salary|years_exp|performance_score|performance_level|
++------+-------+----------+------+---------+-----------------+-----------------+
+|  E101| Ramesh|     Sales| 45000|        3|               78|           MEDIUM|
+|  E102| Sneha|        HR| 52000|        5|               85|             HIGH|
+|  E103|  Amit|        IT| 62000|        7|               92|             HIGH|
+|  E104| Leela|     Sales| 39000|        2|               70|           MEDIUM|
+|  E105| Karan|        IT| 58000|        4|               81|           MEDIUM|
++------+-------+----------+------+---------+-----------------+-----------------+
+
+Top 3 employees by performance score:
++------+-------+----------+------+---------+-----------------+-----------------+
+|emp_id|   name|department|salary|years_exp|performance_score|performance_level|
++------+-------+----------+------+---------+-----------------+-----------------+
+|  E103|  Amit|        IT| 62000|        7|               92|             HIGH|
+|  E102| Sneha|        HR| 52000|        5|               85|             HIGH|
+|  E105| Karan|        IT| 58000|        4|               81|           MEDIUM|
++------+-------+----------+------+---------+-----------------+-----------------+
+
+=== Promotion Eligibility ===
+DataFrame with promotion eligibility:
++------+-------+----------+------+---------+-----------------+-----------------+------------------+
+|emp_id|   name|department|salary|years_exp|performance_score|performance_level|promotion_eligible|
++------+-------+----------+------+---------+-----------------+-----------------+------------------+
+|  E101| Ramesh|     Sales| 45000|        3|               78|           MEDIUM|                NO|
+|  E102| Sneha|        HR| 52000|        5|               85|             HIGH|               YES|
+|  E103|  Amit|        IT| 62000|        7|               92|             HIGH|               YES|
+|  E104| Leela|     Sales| 39000|        2|               70|           MEDIUM|                NO|
+|  E105| Karan|        IT| 58000|        4|               81|           MEDIUM|               YES|
++------+-------+----------+------+---------+-----------------+-----------------+------------------+
+
+Employees eligible for promotion:
++------+-------+----------+------+---------+-----------------+-----------------+------------------+
+|emp_id|   name|department|salary|years_exp|performance_score|performance_level|promotion_eligible|
++------+-------+----------+------+---------+-----------------+-----------------+------------------+
+|  E102| Sneha|        HR| 52000|        5|               85|             HIGH|               YES|
+|  E103|  Amit|        IT| 62000|        7|               92|             HIGH|               YES|
+|  E105| Karan|        IT| 58000|        4|               81|           MEDIUM|               YES|
++------+-------+----------+------+---------+-----------------+-----------------+------------------+
+
+=== Salary vs Performance Insights ===
+Average performance score per department:
++----------+----------------------+
+|department|avg_performance_score|
++----------+----------------------+
+|        HR|                  85.0|
+|        IT|                  86.5|
+|     Sales|                  74.0|
++----------+----------------------+
+
+Correlation between salary and performance score: 0.90
+
+=== Final Summary Outputs ===
+Count of employees per department:
++----------+--------------+
+|department|employee_count|
++----------+--------------+
+|     Sales|             2|
+|        IT|             2|
+|        HR|             1|
++----------+--------------+
+
+Count of employees in each performance level:
++-----------------+--------------+
+|performance_level|employee_count|
++-----------------+--------------+
+|MEDIUM           |             3|
+|HIGH             |             2|
+|LOW              |             0|
++-----------------+--------------+
+
+Total salary expense per department:
++----------+--------------------+
+|department|total_salary_expense|
++----------+--------------------+
+|        HR|               52000|
+|        IT|              120000|
+|     Sales|               84000|
++----------+--------------------+
+
+=== Saving Processed Data ===
+Processed DataFrame saved as 'employee_analysis_output' directory
+
+=== Final Processed DataFrame Preview ===
++------+-------+----------+------+---------+-----------------+-----------------+------------------+
+|emp_id|   name|department|salary|years_exp|performance_score|performance_level|promotion_eligible|
++------+-------+----------+------+---------+-----------------+-----------------+------------------+
+|  E101| Ramesh|     Sales| 45000|        3|               78|           MEDIUM|                NO|
+|  E102| Sneha|        HR| 52000|        5|               85|             HIGH|               YES|
+|  E103|  Amit|        IT| 62000|        7|               92|             HIGH|               YES|
+|  E104| Leela|     Sales| 39000|        2|               70|           MEDIUM|                NO|
+|  E105| Karan|        IT| 58000|        4|               81|           MEDIUM|               YES|
++------+-------+----------+------+---------+-----------------+-----------------+------------------+
+
+SparkSession stopped.
